@@ -3,6 +3,283 @@
 
 @import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
 
+
+div#shake{
+	background-color:rgba(0,0,0,0.6);
+	background-size: cover;
+	height:100%;
+	width:100%;
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+
+
+
+
+
+
+  @-webkit-keyframes steam
+  {
+  from {opacity: 0;}
+  to {opacity: .9;}
+  }
+
+  @-webkit-keyframes jitter
+  {
+  from {margin-left: 0;}
+  to {margin-left: 10px;}
+  }
+
+  @-moz-keyframes steam
+  {
+  from {opacity: 0;}
+  to {opacity: .9;}
+  }
+
+  @-moz-keyframes jitter
+  {
+  from {margin-left: 0;}
+  to {margin-left: 10px;}
+  }
+  @-ms-keyframes steam
+  {
+  from {opacity: 0;}
+  to {opacity: .9;}
+  }
+
+  @-ms-keyframes jitter
+  {
+  from {margin-left: 0;}
+  to {margin-left: 10px;}
+  }
+
+  @-o-keyframes steam
+  {
+  from {opacity: 0;}
+  to {opacity: .9;}
+  }
+
+  @-o-keyframes jitter
+  {
+  from {margin-left: 0;}
+  to {margin-left: 10px;}
+  }
+  
+  @-webkit-keyframes steam
+  {
+  from {opacity: 0;}
+  to {opacity: .9;}
+  }
+
+
+  @-webkit-keyframes cooked
+  {
+  from {background: #f0b4a8;}
+  to {background: #9E4E12;}
+  }
+
+  @-moz-keyframes cooked
+  {
+  from {background: #f0b4a8;}
+  to {background: #9E4E12;}
+  }
+
+  @-ms-keyframes cooked
+  {
+  from {background: #f0b4a8;}
+  to {background: #9E4E12;}
+  }
+
+  @-o-keyframes cooked
+  {
+  from {background: #f0b4a8;}
+  to {background: #9E4E12;}
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+body {
+  margin:50px auto;
+  width:500px;
+  background:#222;
+}
+
+.chicken-wrap {
+  width: 150px;
+height: 200px;
+position:absolute;
+left:40%;
+top:50%;
+margin-top:-200px;
+    margin-left:0;
+  
+  -webkit-transition: -webkit-animation;
+  -moz-transition: -webkit-animation;
+  -ms-transition: -webkit-animation;
+  -o-transition: -webkit-animation;
+  transition: -webkit-animation;
+  
+  
+  
+  -webkit-animation: jitter .1s linear 24 alternate;
+  -moz-animation: jitter .1s linear 24 alternate;
+  -ms-animation: jitter .1s linear 24 alternate;
+  -o-animation: jitter .1s linear 24 alternate;
+}
+
+.sizzle {
+  color:white;
+  opacity:0;
+  font-size:9em;
+  line-height:.6;
+  
+  -webkit-transform:rotate(90deg);
+  -moz-transform:rotate(90deg);
+  -ms-transform:rotate(90deg);
+  -o-transform:rotate(90deg);
+  transform:rotate(90deg);
+  
+  width:40px;
+  display:inline-block;
+
+}
+
+
+
+.chicken-wrap:hover {
+  
+}
+
+.chicken-wrap .sizzle {
+  -webkit-animation:  none;
+  -webkit-transition: -webkit-animation;
+  
+  -moz-animation:  none;
+  -moz-transition: -moz-animation;
+  
+  -ms-animation:  none;
+  -ms-transition: -ms-animation;
+  
+  -o-animation:  none;
+  -o-transition: -o-animation;
+  
+  -webkit-animation: steam 1s linear infinite alternate;
+  -moz-animation: steam 1s linear infinite alternate;
+  -ms-animation: steam 1s linear infinite alternate;
+  -o-animation: steam 1s linear infinite alternate;
+}
+
+.chicken-wrap:hover .sizzle {
+  
+}
+
+.shine {
+  display:block;
+  position:absolute;
+  bottom:30px;
+  opacity:.7;
+  right:10px;
+   width:30px;
+/* width has to be 70% of height */
+/* could use width:70%; in a square container */
+   height:100px;
+   background-color:#fff;
+
+   -webkit-border-radius:63px 63px 63px 63px/
+   108px 108px 72px 72px;
+     -moz-border-radius:63px 63px 63px 63px/
+   108px 108px 72px 72px;
+     -ms-border-radius:63px 63px 63px 63px/
+   108px 108px 72px 72px;
+     -o-border-radius:63px 63px 63px 63px/
+   108px 108px 72px 72px;
+   
+   border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  z-index:2;
+}
+
+.bone {
+  display:block;
+  position:relative;
+  width:25px;
+  height:60px;
+  background:#fff;
+  -webkit-transform:rotate(-130deg);
+  -moz-transform:rotate(-130deg);
+  -ms-transform:rotate(-130deg);
+  -o-transform:rotate(-130deg);
+  transform:rotate(-130deg);
+  top:-55px;
+  left:-25px;
+}
+
+.bone:before, .bone:after {
+  content: '';
+  display:block;
+  position:relative;
+  width:30px;
+  height:30px;
+  background:#fff;
+  border-radius:50%;
+  top:-20px;
+  left:5px;
+}
+
+.bone:after {
+   top:-50px;
+   left:-10px; 
+}
+
+.chicken {
+  cursor:pointer;
+   display:block;
+  position:relative;
+   width:126px; 
+   -webkit-transform: rotate(-130deg);
+  -moz-transform: rotate(-130deg);
+  -ms-transform: rotate(-130deg);
+  -o-transform: rotate(-130deg);
+  transform: rotate(-130deg);
+/* width has to be 70% of height */
+/* could use width:70%; in a square container */
+   height:180px;
+
+   -webkit-border-radius:63px 63px 63px 63px/
+   108px 108px 72px 72px;
+   
+   border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+  
+  border:8px solid #222;
+  z-index:1;
+
+  
+  -webkit-animation: cooked 2s linear 1;
+  -moz-animation: cooked 2s linear 1;
+  -ms-animation: cooked 2s linear 1;
+  -o-animation: cooked 2s linear 1;
+   
+   background: #9E4E12;
+}
+
+
+
+
+
+
+
+
+
+
 html{    background:url(http://thekitemap.com/images/feedback-img.jpg) no-repeat;
   background-size: cover;
   height:100%;
