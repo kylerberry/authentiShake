@@ -5,7 +5,8 @@
 
 
 div#shake{
-	background-color:rgba(0,0,0,0.6);
+	display:none;
+	background-color:rgba(0,0,0,0.8);
 	background-size: cover;
 	height:100%;
 	width:100%;
@@ -13,6 +14,21 @@ div#shake{
 	top:0;
 	left:0;
 }
+div#submitGood{
+	display:none;
+	background-color:rgba(0,0,0,0.8);
+	background-size: cover;
+	height:100%;
+	width:100%;
+	padding:33% 0 0 0;
+	position:absolute;
+	top:0;
+	left:0;
+	color:#fff;
+	font-size:2.5em;
+	text-align:center;
+}
+
 
 
 
@@ -109,7 +125,7 @@ div#shake{
   
 
 body {
-  margin:50px auto;
+  margin:0px auto 0 auto;
   width:500px;
   background:#222;
 }
@@ -299,13 +315,13 @@ html{    background:url(http://thekitemap.com/images/feedback-img.jpg) no-repeat
 	background-color:rgba(72,72,72,0.4);
 	padding-left:35px;
 	padding-right:35px;
-	padding-top:35px;
-	padding-bottom:50px;
+	padding-top:15px;
+	padding-bottom:35px;
 	width: 450px;
 	float: left;
 	left: 50%;
 	position: absolute;
-  margin-top:30px;
+  margin-top:10px;
 	margin-left: -260px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
