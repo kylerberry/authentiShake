@@ -29,12 +29,9 @@ div#submitGood{
 	text-align:center;
 }
 
-
-
-
-
-
-
+.honeypot {
+  display:none;
+}
 
   @-webkit-keyframes steam
   {
@@ -113,15 +110,6 @@ div#submitGood{
   from {background: #f0b4a8;}
   to {background: #9E4E12;}
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
 
 body {
@@ -289,14 +277,8 @@ margin-top:-200px;
 
 
 
-
-
-
-
-
-
-
-html{    background:url(http://thekitemap.com/images/feedback-img.jpg) no-repeat;
+body {
+  background:url(http://thekitemap.com/images/feedback-img.jpg) no-repeat;
   background-size: cover;
   height:100%;
 }
@@ -402,53 +384,35 @@ textarea {
 	line-height: 150%;
 }
 
-input:hover, textarea:hover,
-input:focus, textarea:focus {
-	background-color:white;
-}
-
-#button-blue{
+.button-blue {
 	font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 	float:left;
 	width: 100%;
-	border: #fbfbfb solid 4px;
+	border:4px solid #fbfbfb;
 	cursor:pointer;
 	background-color: #3498db;
 	color:white;
 	font-size:24px;
 	padding-top:22px;
 	padding-bottom:22px;
-	-webkit-transition: all 0.3s;
-	-moz-transition: all 0.3s;
-	transition: all 0.3s;
   margin-top:-4px;
   font-weight:700;
+  
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  
   -webkit-appearance:none;
+
+}
+.button-blue:hover, .button-blue:active {
+  background-color: #45a9ec;
 }
 
-/*#button-blue:hover{
-	background-color: rgba(0,0,0,0);
-	color: #0493bd;
-}*/
-	
-.submit:hover {
-	color: #3498db;
-}
-	
-.ease {
-	width: 0px;
-	height: 74px;
-	background-color: #fbfbfb;
-	-webkit-transition: .3s ease;
-	-moz-transition: .3s ease;
-	-o-transition: .3s ease;
-	-ms-transition: .3s ease;
-	transition: .3s ease;
-}
-
-.submit:hover .ease{
-  width:100%;
-  background-color:white;
+.button-blue:active {
+  background-color: #2387ca;
 }
 
 @media only screen and (max-width: 580px) {
