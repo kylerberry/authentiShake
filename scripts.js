@@ -1,6 +1,21 @@
 // JavaScript Document
 
 $(document).ready(function() {
+	var flag = false;
+	//check to see if acceleromter/gyro data is not null
+	if(flag == false){
+		showRecaptcha();
+		$('#form1').attr('action', 'verify.php');
+		
+		flag == true;
+	}
+	function showRecaptcha(e) {
+		Recaptcha.create("6Le6ieoSAAAAAD91UUIcUK-BWqHAqKtuQfcYRz7s", 'captchadiv', {
+			tabindex: 1,
+			theme: "red",
+			callback: Recaptcha.focus_response_field
+		});
+	  }
 	
 	/* PSUEDO */
 	//intercept submit input

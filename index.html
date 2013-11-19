@@ -7,13 +7,14 @@
 <!-- mark wrote a comment -->
 <link rel="stylesheet" href="styles.css" />
 
+
 </head>
 
 <body>
 
 <div id="form-main">
     <div id="form-div">
-      <form class="form" id="form1" method="post">
+      <form class="form" id="form1" method="post" action="">
 
         <!-- this is the hidden field that traps bots -->
         <input type="text" name="honeypot" value="" class="honeypot" />
@@ -30,6 +31,9 @@
           <textarea name="text" class="feedback-input" id="comment" placeholder="Comment"></textarea>
         </p>
         
+        <div id="captchadiv">
+        
+        </div>
         
         <input type="submit" value="SEND" class="button-blue" id="submit" />
 
@@ -53,8 +57,8 @@
 <!-- <div id="submitGood">
 	<p>Your submission was successful.</p>
 </div> -->
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" ></script>
+<script src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
 <script src="scripts.js" type="text/javascript"></script>
 
 </body>

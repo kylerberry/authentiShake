@@ -33,6 +33,12 @@ div#submitGood{
   display:none;
 }
 
+div#captchadiv{
+	width:300px;
+	margin: 0 auto;
+	padding: 0 0 30px 0;	
+}
+
   @-webkit-keyframes steam
   {
   from {opacity: 0;}
