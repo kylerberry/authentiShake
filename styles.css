@@ -14,6 +14,15 @@ div#shake{
 	top:0;
 	left:0;
 }
+
+a:link, a:visited {
+  color:#E45E5E;
+}
+
+#opt-out {
+  margin-bottom:20px
+}
+
 div#submitGood{
 	display:none;
 	background-color:rgba(0,0,0,0.8);
@@ -29,12 +38,17 @@ div#submitGood{
 	text-align:center;
 }
 
-.honeypot {
+.header {
+  background: url(img/header.jpg) center no-repeat;
+  height:60px;
+}
+
+#honeypot {
   display:none;
 }
 
-div#captchadiv{
-	width:300px;
+#captchadiv{
+  text-align:center;
 	margin: 0 auto;
 	padding: 0 0 30px 0;	
 }
@@ -119,8 +133,6 @@ div#captchadiv{
   
 
 body {
-  margin:0px auto 0 auto;
-  width:500px;
   background:#222;
 }
 
@@ -284,9 +296,10 @@ margin-top:-200px;
 
 
 body {
-  background:url(http://thekitemap.com/images/feedback-img.jpg) no-repeat;
+  /*background:url(http://thekitemap.com/images/feedback-img.jpg) no-repeat;
   background-size: cover;
-  height:100%;
+  height:100%;*/
+  background:#222;
 }
 
 #feedback-page{
@@ -294,25 +307,32 @@ body {
 }
 
 #form-main{
-	width:100%;
-	float:left;
-	padding-top:0px;
+}
+
+.green {
+  background:green;
 }
 
 #form-div {
-	background-color:rgba(72,72,72,0.4);
-	padding-left:15px;
-	padding-right:15px;
-	padding-top:15px;
-	padding-bottom:35px;
-	width: 450px;
-	float: left;
-	left: 50%;
-	position: absolute;
-  margin-top:10px;
-	margin-left: -260px;
+	background-color:#333;
+  padding:15px;
+  margin: 50px auto 0;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
+  max-width: 500px;
+  overflow: hidden;
+}
+
+#gyro-output {
+  color:white;
+  font-size:1.4em;
+  clear:both;
+  padding:20px;
+}
+
+#gyro-output span {
+  font-size:1.1em;
+  color:#666;
 }
 
 .feedback-input {
@@ -421,13 +441,13 @@ textarea {
   background-color: #2387ca;
 }
 
-@media only screen and (max-width: 580px) {
-	#form-div{
-		left: 3%;
-		margin-right: 3%;
-		width: 88%;
-		margin-left: 0;
-		padding-left: 3%;
-		padding-right: 3%;
-	}
+#kill {
+  display:block;
+  background:red;
+  margin:10px 0;
+  color:white;
+  padding:5px 10px;
+  font-size:2em;
+  float:left;
+  text-decoration:none;
 }
