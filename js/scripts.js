@@ -24,33 +24,40 @@
 //create a visual that represents each raw data iteration, output it to the page
 // - could even make a cool data chart for different device readings at the different positions a person might hold a phone
 
-// If a user is looking at their phone. BETA Orientation should ALWAYS be negative. (need to check if thats true on orientation change)
+//If a user is looking at their phone. BETA Orientation should ALWAYS be negative. (need to check if thats true on orientation change)
 
 //might need to include deviceMovement just to determine moving UP and DOWN in 3d space (if you want to shake the phone)
 
 //could reduce it to movements, pattern is 4 'step', coach them through every step. 'snapshot' at the end of each prompt. SHOULD guarantee values, but slower process
 
+//register a shake to calibrate (pattern to test against). Shake again in the same fashion.
+// * Eric mentioned that we could just do one shake for a longer amount of time, sample at the beginning and compare at the end. However, this may lead too much opportunity for botching the shake
+
 // **** check the value, don't record it until the value changes direction, compare our 'snapshots' for positive vs. negative pattern.
 // **** can also be done with x,y,z values!!
 
+//try flashing the decorations on screen
 
 
 $(document).ready(function() {
 	//determine if user has opted for captcha
 	var flag = false;
-	var kill = false; // just an easy way to kill my gyro tracking function
 
 	//click handler
 	jQuery('form').on( 'click', '#submit', function(event) { on_submit(event); } );
-
-	//kill button
-	jQuery('body').on( 'click', '#kill', function() { kill = true; } );
 
 	//if a person prefers captcha
 	jQuery('form').on( 'click', '#opt-out', function(event) {
 		flag = true;
 		showRecaptcha(event);
 	} );
+
+
+
+
+
+
+
 
 	//function called when submit is clicked
 	//sets is_human to true if the trap was not tripped
@@ -67,14 +74,47 @@ $(document).ready(function() {
 			if(is_captcha)
 			{
 				console.log('Verify Captcha');
-				$('#form').attr('action', 'verify.php');
+				$('#form').attr('action', 'lib/verify.php');
 			} else {
 				event.preventDefault();
-				var pattern = get_pattern(event);
+				var verified = begin_verification(event);
 			}
 		}
 		else console.log('You\'re a bot. DIE.');
 	}
+
+
+
+
+
+
+	//this retrieves our pattern to display to the user and to test against
+	function begin_verification(event) {
+
+		//show modal giving the user directions
+		var modal = display_modal();
+
+		//listens for the shake * after * 'SEND' is clicked
+		window.addEventListener('shake', shakeEventDidOccur, false);
+		
+	}
+
+
+
+
+
+
+	
+	function shakeEventDidOccur() {
+		//if verified display the success modal, send the data
+
+		//else didn't work. 'try again' or 'use captcha, instead.'
+	}
+
+
+
+
+
 
 	//check honeypot
 	//returns true or false
@@ -83,10 +123,46 @@ $(document).ready(function() {
 		return ( honey === '' ) ? true : false;
 	}
 
-	//this retrieves our pattern to display to the user and to test against
-	function get_pattern(event) {
-		console.log('Get Pattern');
-		
+
+
+
+
+
+	function display_modal(message) {
+		/* get the parameter that shows us which modal to show */
+		//this just sets the default value of our parameter to null if it isn't set by the function calling it
+		message = typeof message !== 'undefined' ? message : null;
+
+		/*check for message an display appropriate modal to the user: 
+		null, show pattern, movement captured(checking), movement not captured(try again), verified a person(Success), not a human(fail) 
+
+		create a display function for each of these */
+	}
+
+
+
+
+
+
+
+	//this function displays our captcha as a backup if authentiShake fails
+	function showRecaptcha(event) {
+		event.preventDefault();
+		Recaptcha.create("6Le6ieoSAAAAAD91UUIcUK-BWqHAqKtuQfcYRz7s", 'captchadiv', {
+			tabindex: 1,
+			theme: "red",
+			callback: Recaptcha.focus_response_field
+		});
+	}
+
+
+
+
+
+
+
+
+/*	function display_sensor_data() {
 		var $output = jQuery('#gyro-output');
 		var $gyro_message = '';
 		var $accel_message = '';
@@ -109,32 +185,6 @@ $(document).ready(function() {
 			$output.prepend($gyro_message);
 
 		});
-
-		
-		/*this will see the submit request
-		fetch a pattern of movement
-		then call the display modal function*/
-	}
-
-	//this function displays our captcha as a backup if authentiShake fails
-	function showRecaptcha(event) {
-		event.preventDefault();
-		Recaptcha.create("6Le6ieoSAAAAAD91UUIcUK-BWqHAqKtuQfcYRz7s", 'captchadiv', {
-			tabindex: 1,
-			theme: "red",
-			callback: Recaptcha.focus_response_field
-		});
-	}
-
-	function choose_modal(message) {
-		/* get the parameter that shows us which modal to show */
-		//this just sets the default value of our parameter to null if it isn't set by the function calling it
-		message = typeof message !== 'undefined' ? message : null;
-
-		/*check for message an display appropriate modal to the user: 
-		null, show pattern, movement captured(checking), movement not captured(try again), verified a person(Success), not a human(fail) 
-
-		create a display function for each of these */
-	}
+	}*/
 
 });

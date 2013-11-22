@@ -300,6 +300,7 @@ body {
   background-size: cover;
   height:100%;*/
   background:#222;
+  margin:20px;
 }
 
 #feedback-page{
@@ -315,12 +316,15 @@ body {
 
 #form-div {
 	background-color:#333;
-  padding:15px;
+  padding:20px;
   margin: 50px auto 0;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   max-width: 500px;
   overflow: hidden;
+  box-shadow: 4px 4px 0px #111;
+border-left: 1px solid #666;
+border-top: 1px solid #666;
 }
 
 #gyro-output {
@@ -368,40 +372,34 @@ body {
 }
 
 /* Icons ---------------------------------- */
-#name{
+#name, #email, #comment{
 	background-image: url(http://rexkirby.com/kirbyandson/images/name.svg);
 	background-size: 30px 30px;
 	background-position: 11px 8px;
 	background-repeat: no-repeat;
+    background-color: #eee;
+  box-shadow: inset 4px 4px 0px #aaa;
+  border: 0;
+  border-right: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
+  
+  -webkit-transition: background-color .2s;
+  -moz-transition: background-color .2s;
+  -ms-transition: background-color .2s;
+  -o-transition: background-color .2s;
+  transition: background-color .2s;
 }
 
-#name:focus{
-	background-image: url(http://rexkirby.com/kirbyandson/images/name.svg);
-	background-size: 30px 30px;
-	background-position: 8px 5px;
-  background-position: 11px 8px;
-	background-repeat: no-repeat;
+#name:focus, #email:focus, #comment:focus {
+	background-color:#fff;
 }
 
-#email{
-	background-image: url(http://rexkirby.com/kirbyandson/images/email.svg);
-	background-size: 30px 30px;
-	background-position: 11px 8px;
-	background-repeat: no-repeat;
+#email {
+  background-image: url(http://rexkirby.com/kirbyandson/images/email.svg);
 }
 
-#email:focus{
-	background-image: url(http://rexkirby.com/kirbyandson/images/email.svg);
-	background-size: 30px 30px;
-  background-position: 11px 8px;
-	background-repeat: no-repeat;
-}
-
-#comment{
+#comment {
 	background-image: url(http://rexkirby.com/kirbyandson/images/comment.svg);
-	background-size: 30px 30px;
-	background-position: 11px 8px;
-	background-repeat: no-repeat;
 }
 
 textarea {
@@ -413,16 +411,16 @@ textarea {
 .button-blue {
 	font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 	float:left;
-	width: 100%;
-	border:4px solid #fbfbfb;
-	cursor:pointer;
-	background-color: #3498db;
+border: 1px solid #70B4E2;
+cursor: pointer;
+background-color: #3498db;
+box-shadow: 0px 5px 0 #166194;
 	color:white;
-	font-size:24px;
-	padding-top:22px;
-	padding-bottom:22px;
-  margin-top:-4px;
+	font-size:20px;
+  padding:10px 15px;
   font-weight:700;
+  margin-top:0;
+  margin-bottom:3px;
   
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
@@ -433,12 +431,17 @@ textarea {
   -webkit-appearance:none;
 
 }
-.button-blue:hover, .button-blue:active {
+/*.button-blue:hover {
   background-color: #45a9ec;
-}
+  
+}*/
 
-.button-blue:active {
+.button-blue:active, .button-blue:focus  {
   background-color: #2387ca;
+  box-shadow: 0px 0px #3498db;
+  margin-top:3px;
+  margin-bottom:0px;
+  outline:none;
 }
 
 #kill {
