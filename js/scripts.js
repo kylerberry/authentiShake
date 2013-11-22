@@ -92,10 +92,10 @@ $(document).ready(function() {
 	function begin_verification(event) {
 
 		//show modal giving the user directions
-		var modal = display_modal();
+		display_modal();
 
 		//listens for the shake * after * 'SEND' is clicked
-		window.addEventListener('shake', shakeEventDidOccur, false);
+		//window.addEventListener('shake', shakeEventDidOccur, false);
 		
 	}
 
@@ -128,15 +128,34 @@ $(document).ready(function() {
 
 
 
+	/* get the parameter that shows us which modal to show */
 	function display_modal(message) {
-		/* get the parameter that shows us which modal to show */
 		//this just sets the default value of our parameter to null if it isn't set by the function calling it
 		message = typeof message !== 'undefined' ? message : null;
 
-		/*check for message an display appropriate modal to the user: 
-		null, show pattern, movement captured(checking), movement not captured(try again), verified a person(Success), not a human(fail) 
+		var $messageWrap = jQuery('.message');
+		var $modal = $messageWrap.parent();
 
-		create a display function for each of these */
+		//show the modal
+		$modal.toggle();
+
+		//after 2 seconds the text is changed to inform the user that it's time to shake
+		setTimeout(function() {
+			if(message === null) {
+				output = 'Harder...';
+			}
+			$messageWrap.text(output);
+		}, 2000);
+
+		setTimeout(function() {
+			output = 'HARDER!';
+			$messageWrap.text(output);
+		}, 4000);
+
+		
+
+		/*check for message an display appropriate modal to the user: 
+		null, show pattern, movement captured(checking), movement not captured(try again), verified a person(Success), not a human(fail) */
 	}
 
 
