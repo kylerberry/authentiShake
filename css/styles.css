@@ -459,6 +459,7 @@ box-shadow: 0px 5px 0 #166194;
 
 .modal {
   position: absolute;
+  background: #3498db;
   background: rgba(35,135,202,.9);
   top: 0;
   left:0;
@@ -467,6 +468,19 @@ box-shadow: 0px 5px 0 #166194;
   text-align:center;
   display:none;
   z-index:100;
+}
+
+.modal.success {
+  background: #34DB4F;
+  background:rgba(35, 202, 82, 0.9);
+}
+.modal.try-again {
+  background: #DBBA34;
+  background:rgba(219,186,52,.9);
+}
+.modal.fail {
+  background: #34DB4F;
+  background:rgba(219,79,52,.9);
 }
 
 .message {

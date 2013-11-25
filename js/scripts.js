@@ -91,12 +91,11 @@ $(document).ready(function() {
 	//this retrieves our pattern to display to the user and to test against
 	function begin_verification(event) {
 
-		//show modal giving the user directions
+		//show modal giving the user initial directions
 		display_modal();
 
-		//listens for the shake * after * 'SEND' is clicked
-		//window.addEventListener('shake', shakeEventDidOccur, false);
-		
+		//listens for a shake event
+		window.addEventListener('shake', shakeEventDidOccur, false);
 	}
 
 
@@ -106,9 +105,17 @@ $(document).ready(function() {
 
 	
 	function shakeEventDidOccur() {
-		//if verified display the success modal, send the data
+		//play success noise
+		var sound = new Audio('./assets/success.mp3');
+		sound.play();
 
-		//else didn't work. 'try again' or 'use captcha, instead.'
+		//do something with the form data
+
+		//show a success message to the user
+		jQuery('#loading').remove();
+		jQuery('.modal').addClass('success');
+		display_modal('You are human! <br/> Your message has been sent.');
+		myShakeEvent.stop();
 	}
 
 
@@ -136,23 +143,19 @@ $(document).ready(function() {
 		var $messageWrap = jQuery('.message');
 		var $modal = $messageWrap.parent();
 
-		//show the modal
-		$modal.toggle();
-
-		//after 2 seconds the text is changed to inform the user that it's time to shake
-		setTimeout(function() {
-			if(message === null) {
-				output = 'Harder...';
-			}
-			$messageWrap.text(output);
-		}, 2000);
-
-		setTimeout(function() {
-			output = 'HARDER!';
-			$messageWrap.text(output);
-		}, 4000);
-
-		
+		//if the modal is hidden and the message is null
+		if(!$modal.is(':visible') && message === null) {
+			$modal.toggle();
+		}
+		//if the modal is hidden and there's a message
+		if(!$modal.is(':visible') && message !== null) {
+			$messageWrap.html(message);
+			$modal.toggle();
+		}
+		//if the modal is visible but the message has changed
+		if($modal.is(':visible') && message !== null) {
+			$messageWrap.html(message);
+		}
 
 		/*check for message an display appropriate modal to the user: 
 		null, show pattern, movement captured(checking), movement not captured(try again), verified a person(Success), not a human(fail) */
