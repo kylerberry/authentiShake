@@ -72,21 +72,49 @@ $(document).ready(function() {
 		console.log(flag);
 		if(is_human)
 		{
+			
+			var name = $("#name").val();
+			var email = $("#email").val();
+			var comment = $("#comment").val();
+	
 			if(is_captcha)
 			{
 				$('#form').attr('action', 'lib/verify.php');
+				
+				event.preventDefault();
+	
+				var challengeField = $("input#recaptcha_challenge_field").val();
+				var responseField = $("input#recaptcha_response_field").val();
+
+				$.ajax({
+					method: 'post',
+					dataType: 'html',
+					data: 'recaptcha_challenge_field=' + challengeField + '&recaptcha_response_field=' + responseField,
+					url: 'lib/verify.php',
+					success: function(data) {
+						if(data.indexOf("pass") !== -1){
+							//what to execute when captcha verification passes
+							outputFields(name, email, comment);		
+						}
+						else{
+							//what to execute when recaptcha verification fails
+							$('#alert').html('<h3>Captcha Verification Failed. Try again.</h3>');
+						}
+					},
+					error: function(data) {
+						
+					}
+				});
+				
+				
+				
 			} else {
 				event.preventDefault();
-				var verified = begin_verification(event);
+				verified = begin_verification(event);
 			}
 		}
 		else console.log('You\'re a bot. DIE.');
 	}
-
-
-
-
-
 
 	//this shows the initial modal, starts the timer and begins listening for a shake event.
 	function begin_verification(event) {
@@ -95,7 +123,10 @@ $(document).ready(function() {
 		display_modal();
 
 		//listens for a shake event
-		window.addEventListener('shake', shakeEventDidOccur, false);
+		window.addEventListener('shake', function(e){
+			e.preventDefault();
+			shakeEventDidOccur();
+		}, false);
 
 		shake_timer();
 		
@@ -232,12 +263,25 @@ $(document).ready(function() {
 		Recaptcha.create("6Le6ieoSAAAAAD91UUIcUK-BWqHAqKtuQfcYRz7s", 'captchadiv', {
 			tabindex: 1,
 			theme: "red",
-			callback: Recaptcha.focus_response_field
+			callback: function(){
+					Recaptcha.focus_response_field;
+					$('#captchadiv').append('<a id="close-captcha" href="#" title="Click for CAPTCHA">Close Captcha</a>');
+				}
 		});
+		
 	}
 
 
-
+	function outputFields (name, email, comment){
+		$('#form').empty();
+		$('#alert').html("<p><h3>Form Submitted Successfully!</h3>");
+		$('#alert').append("Name: " + name + "<br/>");
+		$('#alert').append("Email: " + email + "<br/>");
+		$('#alert').append("Comment: " + comment + "</p>");
+		
+		$('#alert').append("<p style=\"font-style:italic;\">This is the data that was gathered from your form. We didn't really do anything, we just thought it might be nice to see before you go. If something's not right it's probably your fault; refresh the page to try again.</p>");
+		
+	}
 
 
 
@@ -245,6 +289,13 @@ $(document).ready(function() {
 	//click handler
 	jQuery('form').on( 'click', '#submit', function(event) { on_submit(event); } );
 
+	//close recaptcha
+	jQuery('form').on( 'click', '#close-captcha', function(event) { 
+		Recaptcha.destroy(); 
+		$('#captchadiv').html('<p>This form uses AuthentiShake verification. <br/>Click <a id="choose-captcha" href="#" title="Click for CAPTCHA">here</a> for a Captcha, instead.</p>');
+		flag = false;
+	} );
+	
 	//skip authentishake and use captcha
 	jQuery('form').on( 'click', '#choose-captcha', function(event) {
 		flag = true;
@@ -268,6 +319,5 @@ $(document).ready(function() {
 		shake_timer();
 		display_modal('optout');
 	});
-
-
+	
 });
