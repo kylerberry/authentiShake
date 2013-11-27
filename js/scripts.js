@@ -98,6 +98,7 @@ $(document).ready(function() {
 						}
 						else{
 							//what to execute when recaptcha verification fails
+							Recaptcha.reload(); 
 							$('#alert').html('<h3>Captcha Verification Failed. Try again.</h3>');
 						}
 					},
@@ -230,9 +231,16 @@ $(document).ready(function() {
 		}
 
 		if(action === 'success') {
+			var name = $("#name").val();
+			var email = $("#email").val();
+			var comment = $("#comment").val();
+			
 			$modal.addClass('success');
 			var item = success_messages[Math.floor(Math.random()*(success_messages.length))];
-			message = item + '<br/><br/> Your message has been sent.';
+			message = item + '<br/><br/>';
+			message += '<p class="small"><b>Name</b><br/> ' + name + '<br/>';
+			message += '<b>Email</b><br/>' + email + '<br/>';
+			message += '<b>Comment</b><br/>' + comment + '</p>';
 			$messageWrap.html(message);
 		}
 
