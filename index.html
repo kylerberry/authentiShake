@@ -10,6 +10,7 @@
 <body>
 
     <div id="form-div">
+
       <form class="form" id="form" method="post" action="">
 
         <!-- this is the hidden field that traps bots -->
@@ -28,13 +29,17 @@
         </p>
         
         <div id="captchadiv">
-        <a id="opt-out" href="#" title="Click for CAPTCHA">Click here for a CAPTCHA, instead.</a>
+          <p>This form uses AuthentiShake verification. <br/>Click <a id="opt-out" href="#" title="Click for CAPTCHA">here</a> for a Captcha, instead.</p>
+          
         </div>
+
         <input type="submit" value="SEND" class="button-blue" id="submit" />
 
       </form>
       <div class="modal">
-        <p class="message">Prove you are human <br/> by shaking your device!<div id="loading"><div id="blockG_1" class="loading_blockG"></div><div id="blockG_2" class="loading_blockG"></div><div id="blockG_3" class="loading_blockG"></div></div></p>
+        <span href="#" title="" id="close-all">&times;</span>
+        <p class="message"></p>
+        <div class="logo"></div>
       </div>
     </div>
     

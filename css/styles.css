@@ -48,9 +48,9 @@ div#submitGood{
 }
 
 #captchadiv{
-  text-align:center;
 	margin: 0 auto;
 	padding: 0 0 30px 0;	
+  line-height:1.4em;
 }
 
   @-webkit-keyframes steam
@@ -135,6 +135,11 @@ div#submitGood{
 body {
   background:#222;
   position:relative;
+  font-family:helvetica, sans-serif;
+}
+
+p {
+  color:#eee
 }
 
 .chicken-wrap {
@@ -438,11 +443,42 @@ box-shadow: 0px 5px 0 #166194;
   
 }*/
 
+.button {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  display:inline-block;
+  border: 1px solid #F5A27A;
+  background-color: #D15728;
+  box-shadow: 0px 5px 0 #913F11;
+  color:white!important;
+  font-size:20px;
+  padding:10px 15px;
+  font-weight:700;
+  margin-top:15px;
+  margin-bottom:3px;
+  text-decoration:none;
+  
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  
+  -webkit-appearance:none;
+}
+
 .button-blue:active, .button-blue:focus  {
   background-color: #2387ca;
   box-shadow: 0px 0px #3498db;
   margin-top:3px;
   margin-bottom:0px;
+  outline:none;
+}
+
+.button:active, .button:focus {
+  border: 1px solid #F5A27A;
+  background-color: #D15728;
+  box-shadow: 0px 0px 0 #913F11;
+  margin-top:18px;
   outline:none;
 }
 
@@ -468,11 +504,15 @@ box-shadow: 0px 5px 0 #166194;
   text-align:center;
   display:none;
   z-index:100;
+  padding:15px;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  box-sizing:border-box;
 }
 
 .modal.success {
-  background: #34DB4F;
-  background:rgba(35, 202, 82, 0.9);
+  background: #22873e;
+  background:rgba(34, 135, 62, .9);
 }
 .modal.try-again {
   background: #DBBA34;
@@ -486,9 +526,41 @@ box-shadow: 0px 5px 0 #166194;
 .message {
   font-family: 'Montserrat', Arial, Helvetica, sans-serif;
   color:white;
-  font-size: 18px;
+  font-size: 22px;
   margin-top: 30%;
   text-shadow: 1px 1px 1px #0F4672;
+}
+
+.message #opt-out {
+  font-size: 16px;
+  display: inline-block;
+  margin-top: 20%;
+  text-shadow: none;
+}
+
+#close-all {
+  display: block;
+  background: #333; /*#C03512*/
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  float: right;
+  border-radius: 3px;
+  color: #fff;
+  cursor:pointer;
+  line-height:1.5em;
+}
+
+.logo {
+  background: url(../assets/authentishakeLOGO.png) center 0 no-repeat;
+  width: 100%;
+  margin-left: -15px;
+  height: 43px;
+  position: absolute;
+  background-size: 60%;
+  bottom: 15px;
 }
 
 /* LOADING ANIMATION */

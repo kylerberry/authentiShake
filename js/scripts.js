@@ -42,15 +42,17 @@
 $(document).ready(function() {
 	//determine if user has opted for captcha
 	var flag = false;
+	var try_again = false;
+	var time;
 
-	//click handler
-	jQuery('form').on( 'click', '#submit', function(event) { on_submit(event); } );
-
-	//if a person prefers captcha
-	jQuery('form').on( 'click', '#opt-out', function(event) {
-		flag = true;
-		showRecaptcha(event);
-	} );
+	var success_messages = [
+		'You\'re a wiggly, jiggly human!',
+		'You shook it like a salt-shaker!',
+		'Stay away from babies!',
+		'You\'re awfully good at that motion...',
+		'If this was a milkshake, all the boys would be in your yard!',
+		'Your martini is ready, Mr. Bond.'
+	];
 
 
 
@@ -64,16 +66,14 @@ $(document).ready(function() {
 	//if submission is not a bot then proceed
 	function on_submit(event) {
 
+		try_again = true;
 		var is_human = trap_tripped();
 		var is_captcha = (flag === true) ? true : false ;
-		console.log("flag: " + flag);
-
+		console.log(flag);
 		if(is_human)
 		{
-			console.log('You\'re Human');
 			if(is_captcha)
 			{
-				console.log('Verify Captcha');
 				$('#form').attr('action', 'lib/verify.php');
 			} else {
 				event.preventDefault();
@@ -88,7 +88,7 @@ $(document).ready(function() {
 
 
 
-	//this retrieves our pattern to display to the user and to test against
+	//this shows the initial modal, starts the timer and begins listening for a shake event.
 	function begin_verification(event) {
 
 		//show modal giving the user initial directions
@@ -96,25 +96,58 @@ $(document).ready(function() {
 
 		//listens for a shake event
 		window.addEventListener('shake', shakeEventDidOccur, false);
+
+		shake_timer();
+		
 	}
 
 
 
 
 
+	//this begins the timer to determine timeout on shaking
+	function shake_timer() {
+		time = setTimeout(function() {
+				window.removeEventListener('shake', shakeEventDidOccur, false);
+				if(try_again) {
+					display_modal('tryagain');
+				}
+			}, 8000);
+	}
 
-	
-	function shakeEventDidOccur() {
-		//play success noise
+
+
+
+	//this plays our success sound (only seems to work on firefox mobile)
+	//chrome mobile needs a touch event for sounds
+	function playSound() {
 		var sound = new Audio('./assets/success.mp3');
 		sound.play();
+	}
 
-		//do something with the form data
+
+
+
+
+	//if a shake event occurs, remove our shake listener
+	//play the success sound
+	//display the new modal
+	//stop the shake event
+
+	/*
+	This may be the place to send the form data
+	*/
+	function shakeEventDidOccur() {
+		//set times up false so the try again modal doesn't reappear
+		window.removeEventListener('shake', shakeEventDidOccur, false);
+		
+		try_again = false;
+
+		playSound();
 
 		//show a success message to the user
-		jQuery('#loading').remove();
-		jQuery('.modal').addClass('success');
-		display_modal('You are human! <br/> Your message has been sent.');
+		display_modal('success');
+
 		myShakeEvent.stop();
 	}
 
@@ -135,30 +168,55 @@ $(document).ready(function() {
 
 
 
-	/* get the parameter that shows us which modal to show */
-	function display_modal(message) {
+	/* get the parameter that shows us which modal and messages to show */
+	function display_modal(action) {
 		//this just sets the default value of our parameter to null if it isn't set by the function calling it
-		message = typeof message !== 'undefined' ? message : null;
+		action = typeof action !== 'undefined' ? action : null;
 
 		var $messageWrap = jQuery('.message');
 		var $modal = $messageWrap.parent();
+		var $loading = '<div id="loading"><div id="blockG_1" class="loading_blockG"></div><div id="blockG_2" class="loading_blockG"></div><div id="blockG_3" class="loading_blockG"></div></div>';
+		var $try_again_btn = '<a class="button" href="#" id="try-again" title="" >Try Again</a>';
+		var $close_btn = '<a href="#" id="opt-out" title="" >I prefer Captcha...</a>';
+		var message = '';
 
-		//if the modal is hidden and the message is null
-		if(!$modal.is(':visible') && message === null) {
-			$modal.toggle();
-		}
-		//if the modal is hidden and there's a message
-		if(!$modal.is(':visible') && message !== null) {
-			$messageWrap.html(message);
-			$modal.toggle();
-		}
-		//if the modal is visible but the message has changed
-		if($modal.is(':visible') && message !== null) {
+		//this is the initial modal
+		if(action === null) {
+			message = 'Prove you\'re human <br/>by shaking your device<br/><br/>' + $loading;
+
+			if($modal.hasClass('try-again')) $modal.removeClass('try-again');
+			if($modal.hasClass('success')) $modal.removeClass('success');
+			if(!$modal.is(':visible')) $modal.toggle();
+
 			$messageWrap.html(message);
 		}
 
-		/*check for message an display appropriate modal to the user: 
-		null, show pattern, movement captured(checking), movement not captured(try again), verified a person(Success), not a human(fail) */
+		//this is the screen shown if you timeout
+		if(action === 'tryagain') {
+			$modal.addClass('try-again');
+			message = 'Time\'s up.<br/> Try again?' + '<br/>' + $try_again_btn + '<br/>' + $close_btn;
+			$messageWrap.html(message);
+		}
+
+		if(action === 'success') {
+			$modal.addClass('success');
+			var item = success_messages[Math.floor(Math.random()*(success_messages.length))];
+			message = item + '<br/><br/> Your message has been sent.';
+			$messageWrap.html(message);
+		}
+
+		//this closes the modal
+		if(action === 'optout') {
+			$modal.toggle();
+			showRecaptcha();
+			//open captcha
+		}
+
+		//close-all button
+		if(action === 'close') {
+			$modal.toggle();
+			//open captcha
+		}
 	}
 
 
@@ -169,7 +227,8 @@ $(document).ready(function() {
 
 	//this function displays our captcha as a backup if authentiShake fails
 	function showRecaptcha(event) {
-		event.preventDefault();
+		event = typeof event !== 'undefined' ? event : null;
+		if(event !== null) event.preventDefault();
 		Recaptcha.create("6Le6ieoSAAAAAD91UUIcUK-BWqHAqKtuQfcYRz7s", 'captchadiv', {
 			tabindex: 1,
 			theme: "red",
@@ -183,30 +242,32 @@ $(document).ready(function() {
 
 
 
+	//click handler
+	jQuery('form').on( 'click', '#submit', function(event) { on_submit(event); } );
 
-/*	function display_sensor_data() {
-		var $output = jQuery('#gyro-output');
-		var $gyro_message = '';
-		var $accel_message = '';
-		var temp = '';
-		var time = 0;
+	//if a person prefers captcha
+	jQuery('form').on( 'click', '#opt-out', function(event) {
+		flag = true;
+		showRecaptcha(event);
+	} );
 
-		//o.x, o.y, o.z for accelerometers
-		//o.alpha, o.beta, o.gamma for gyro
-		gyro.startTracking(function(o) {
+	//restart
+	jQuery('.modal').on( 'click', '#try-again', function(event) { on_submit(event); } );
 
-			if( kill === true ) gyro.stopTracking();
+	//Close modal
+	jQuery('.modal').on( 'click', '#close-all', function(event) {
+		try_again = false;
+		window.clearTimeout(time);
+		display_modal('close');
+	} );
 
-			time += 0.5;
+	//opt out
+	jQuery('.modal').on( 'click', '#opt-out', function(event) {
+		flag = true;
+		window.clearTimeout(time);
+		shake_timer();
+		display_modal('optout');
+	});
 
-			//console.log( 'x motion: ' + o.x + '\n' + 'y motion: ' + o.y + '\n'+ 'z motion: ' + o.z );
-			$accel_message = '<span>x: </span>' + o.x + '<br/>' + '<span>y: </span>' + o.y + '<br/>' + '<span>z: </span>' + o.z + '<br/><br/>';
-			$gyro_message = $accel_message + '<span>alpha: </span>' + o.alpha + '<br/>' + '<span>beta: </span>' + o.beta + '<br/>' + '<span>gamma: </span>' + o.gamma + '<br/>' + '<span>time: </span>' + time + 's<hr/>';
-			
-			//logs my outputs to the page so i can debug easier on phone
-			$output.prepend($gyro_message);
-
-		});
-	}*/
 
 });
