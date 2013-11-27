@@ -237,7 +237,7 @@ $(document).ready(function() {
 			
 			$modal.addClass('success');
 			var item = success_messages[Math.floor(Math.random()*(success_messages.length))];
-			message = item + '<br/><br/>';
+			message = item + '<br/><br/>Message Sent!<br/>';
 			message += '<p class="small"><b>Name</b><br/> ' + name + '<br/>';
 			message += '<b>Email</b><br/>' + email + '<br/>';
 			message += '<b>Comment</b><br/>' + comment + '</p>';
