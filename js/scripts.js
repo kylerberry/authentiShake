@@ -245,8 +245,8 @@ $(document).ready(function() {
 	//click handler
 	jQuery('form').on( 'click', '#submit', function(event) { on_submit(event); } );
 
-	//if a person prefers captcha
-	jQuery('form').on( 'click', '#opt-out', function(event) {
+	//skip authentishake and use captcha
+	jQuery('form').on( 'click', '#choose-captcha', function(event) {
 		flag = true;
 		showRecaptcha(event);
 	} );
@@ -261,7 +261,7 @@ $(document).ready(function() {
 		display_modal('close');
 	} );
 
-	//opt out
+	//f a person prefers captcha
 	jQuery('.modal').on( 'click', '#opt-out', function(event) {
 		flag = true;
 		window.clearTimeout(time);
