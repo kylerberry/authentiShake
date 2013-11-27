@@ -65,7 +65,10 @@ $(document).ready(function() {
 	//sets is_human to true if the trap was not tripped
 	//if submission is not a bot then proceed
 	function on_submit(event) {
-
+		
+		var submit_button = document.getElementById("submit"); 
+		submit_button.focus();
+		
 		try_again = true;
 		var is_human = trap_tripped();
 		var is_captcha = (flag === true) ? true : false ;
@@ -94,7 +97,8 @@ $(document).ready(function() {
 					success: function(data) {
 						if(data.indexOf("pass") !== -1){
 							//what to execute when captcha verification passes
-							outputFields(name, email, comment);		
+							outputFields(name, email, comment);	
+							storeFields(name, email, comment);	
 						}
 						else{
 							//what to execute when recaptcha verification fails
@@ -124,10 +128,7 @@ $(document).ready(function() {
 		display_modal();
 
 		//listens for a shake event
-		window.addEventListener('shake', function(e){
-			e.preventDefault();
-			shakeEventDidOccur();
-		}, false);
+		window.addEventListener('shake', shakeEventDidOccur , false);
 
 		shake_timer();
 		
@@ -242,6 +243,8 @@ $(document).ready(function() {
 			message += '<b>Email</b><br/>' + email + '<br/>';
 			message += '<b>Comment</b><br/>' + comment + '</p>';
 			$messageWrap.html(message);
+			
+			storeFields(name, email, comment);	
 		}
 
 		//this closes the modal
@@ -287,8 +290,25 @@ $(document).ready(function() {
 		$('#alert').append("Email: " + email + "<br/>");
 		$('#alert').append("Comment: " + comment + "</p>");
 		
-		$('#alert').append("<p style=\"font-style:italic;\">This is the data that was gathered from your form. We didn't really do anything, we just thought it might be nice to see before you go. If something's not right it's probably your fault; refresh the page to try again.</p>");
-		
+		$('#alert').append("<p style=\"font-style:italic;\">This is the data that was gathered from your form. We didn't really do anything, we just thought it might be nice to see before you go. If something's not right it's probably your fault; refresh the page to try again.</p>");	
+	}
+	
+	
+	
+	
+	
+	function storeFields(name, email, comment){	
+		$.ajax({
+			method: 'post',
+			dataType: 'html',
+			data: 'name=' + name + '&email=' + email + '&comment=' + comment, 
+			url: 'lib/log.php',
+			success: function(data) {
+				//do nothing to the user
+				//alert(data);
+			},
+			error: function(data) {}
+		});
 	}
 
 
